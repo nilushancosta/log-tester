@@ -1,0 +1,48 @@
+openapi: 3.0.3
+info:
+  title: Log Tester API
+  description: API for generating logs of a specified size and frequency.
+  version: 1.0.0
+paths:
+  /generate-logs-of-size:
+    post:
+      summary: Generate logs of a specified size and frequency
+      description: Accepts a JSON payload to generate logs asynchronously.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                logEntrySizeBytes:
+                  type: integer
+                  description: Size of each log entry in bytes. Must be greater than 10.
+                  example: 100
+                numOfEntries:
+                  type: integer
+                  description: Number of log entries to generate. Must be greater than 0.
+                  example: 10
+                sleepMsBetweenEntries:
+                  type: integer
+                  description: Time in milliseconds to wait between generating each log entry. Must be greater than 0.
+                  example: 500
+              required:
+                - logEntrySizeBytes
+                - numOfEntries
+                - sleepMsBetweenEntries
+      responses:
+        '201':
+          description: Log generation started successfully.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Log generation started
+        '400':
+          description: Invalid request payload.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Invalid JSON payload
