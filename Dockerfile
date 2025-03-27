@@ -9,4 +9,5 @@ RUN go mod download
 RUN go build -o log-tester main.go
 
 EXPOSE 8080
+USER 10001
 CMD ["./log-tester"]
